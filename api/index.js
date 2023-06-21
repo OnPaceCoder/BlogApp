@@ -51,7 +51,7 @@ app.post("/login", async (req, res) => {
             jwt.sign({ username, id: userDoc.id }, secret, {}, (err, token) => {
                 if (err) throw err
 
-                res.cookie('token', token).json('Ok')
+                res.cookie('token', token).json({ id: userDoc._id, username })
             })
         }
         else {
@@ -64,7 +64,7 @@ app.post("/login", async (req, res) => {
     }
 })
 
-//Profile
+//profile
 app.get("/profile", async (req, res) => {
     const { token } = req.cookies;
     jwt.verify(token, secret, {}, (err, info) => {
@@ -73,7 +73,11 @@ app.get("/profile", async (req, res) => {
     })
 })
 
+//logout
+app.post("/logout", (req, res) => {
 
+    res.cookie('token', "").json("Ok")
+})
 
 //Server listening on port:4000
 app.listen(4000)
