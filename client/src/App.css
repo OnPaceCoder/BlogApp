@@ -96,7 +96,8 @@ button {
   color: #fff;
 }
 
-form h1 {
+form.login h1,
+form.register {
   text-align: center;
   margin-bottom: 10px;
 }
