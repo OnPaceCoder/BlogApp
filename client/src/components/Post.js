@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Post = () => {
+const Post = ({ title, summary, content, cover, createdAt }) => {
     return (
         <div>
             <div className="post">
@@ -9,12 +9,12 @@ const Post = () => {
                     <img src="https://images.pexels.com/photos/16500373/pexels-photo-16500373/free-photo-of-wood-stairs-dirty-steps.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
                 </div>
                 <div className="texts">
-                    <h2>Full-house battery backup coming later this year</h2>
+                    <h2>{title}</h2>
                     <p className="info">
                         <a href="" className="author">Priyank Vasoya</a>
-                        <time>2023-06-20</time>
+                        <time>{createdAt}</time>
                     </p>
-                    <p className='summary'>Today at its special launch event , home backup power giant lawn mover</p>
+                    <p className='summary'>{summary}</p>
                 </div>
 
             </div>

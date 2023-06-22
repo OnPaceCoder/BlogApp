@@ -4,12 +4,15 @@ const cors = require('cors')
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const cokkieParser = require("cookie-parser")
+const multer = require("multer")
+const uploadMiddleware = multer({ dest: 'uploads/' })
+const cookieParser = require("cookie-parser")
+const fs = require('fs')
 require('dotenv').config()
 
 //Importing Database models
 const User = require("./models/User")
-
+const Post = require("./models/Post")
 //Creating Salt
 const salt = bcrypt.genSaltSync(15);
 const secret = process.env.SECRET
@@ -17,7 +20,7 @@ const secret = process.env.SECRET
 const app = express()
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json())
-app.use(cokkieParser())
+app.use(cookieParser())
 
 
 //Database Connection
@@ -78,6 +81,40 @@ app.post("/logout", (req, res) => {
 
     res.cookie('token', "").json("Ok")
 })
+
+//post
+
+app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
+
+    const { originalname, path } = req.file;
+
+    const parts = originalname.split('.')
+    const ext = parts[parts.length - 1];
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath)
+
+    const { title, summary, content } = req.body;
+
+    const postDoc = await Post.create({
+        title,
+        summary, content, cover: newPath,
+    })
+
+
+    res.json(postDoc)
+
+})
+
+//GET POST
+app.get('/post', async (req, res) => {
+
+    const posts = await Post.find()
+
+
+    res.json(posts)
+})
+
+
 
 //Server listening on port:4000
 app.listen(4000)
