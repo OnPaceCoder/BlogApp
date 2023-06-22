@@ -5,13 +5,15 @@ import { UserContext } from '../context/UserContext';
 const Header = () => {
     // const [userName, setUserName] = useState(""); 
     const { setUserInfo, userInfo } = useContext(UserContext)
+
     useEffect(() => {
         async function callProfile() {
 
             const response = await fetch("http://localhost:4000/profile", {
                 credentials: 'include'
             })
-            response.json().then((data) => { setUserInfo(data.username) })
+
+            response.json().then((data) => { setUserInfo(data); })
         }
         callProfile()
     }, [])

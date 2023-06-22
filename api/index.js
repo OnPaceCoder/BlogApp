@@ -70,6 +70,7 @@ app.post("/login", async (req, res) => {
 //profile
 app.get("/profile", async (req, res) => {
     const { token } = req.cookies;
+
     jwt.verify(token, secret, {}, (err, info) => {
         if (err) throw err
         res.json(info)
@@ -93,25 +94,27 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
     const newPath = path + "." + ext;
     fs.renameSync(path, newPath)
 
-    const { title, summary, content } = req.body;
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err
+        const { title, summary, content } = req.body;
+        const postDoc = await Post.create({
+            title,
+            summary, content, cover: newPath,
+            author: info.id
+        })
 
-    const postDoc = await Post.create({
-        title,
-        summary, content, cover: newPath,
+        res.json(postDoc)
     })
 
 
-    res.json(postDoc)
+
 
 })
 
 //GET POST
 app.get('/post', async (req, res) => {
-
-    const posts = await Post.find()
-
-
-    res.json(posts)
+    res.json(await Post.find().populate('author', ['username']).sort({ createdAt: -1 }))
 })
 
 

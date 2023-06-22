@@ -1,6 +1,6 @@
 import React from 'react'
-
-const Post = ({ title, summary, content, cover, createdAt }) => {
+import { formatISO9075 } from 'date-fns'
+const Post = ({ title, summary, content, cover, createdAt, author }) => {
     return (
         <div>
             <div className="post">
@@ -11,8 +11,8 @@ const Post = ({ title, summary, content, cover, createdAt }) => {
                 <div className="texts">
                     <h2>{title}</h2>
                     <p className="info">
-                        <a href="" className="author">Priyank Vasoya</a>
-                        <time>{createdAt}</time>
+                        <a href="" className="author">{author?.username}</a>
+                        <time>{formatISO9075(new Date(createdAt))}</time>
                     </p>
                     <p className='summary'>{summary}</p>
                 </div>

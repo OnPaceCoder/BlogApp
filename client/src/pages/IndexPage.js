@@ -7,6 +7,7 @@ export const IndexPage = () => {
         fetch("http://localhost:4000/post").then(response => {
             response.json().then(posts => {
                 setPosts(posts)
+
             })
         })
 
@@ -18,7 +19,7 @@ export const IndexPage = () => {
         <div>
             {
                 posts.length > 0 && posts.map(post =>
-                    <Post  {...post} />)
+                    <Post  {...post} key={post._id} />)
             }
 
         </div>
