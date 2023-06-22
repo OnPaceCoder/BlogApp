@@ -1,14 +1,14 @@
 
 # dependencies
 /node_modules
-
+/uploads
 
 # testing
 /coverage
 
 # production
 /build
-/uploads
+
 
 # misc
 .DS_Store
