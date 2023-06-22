@@ -6,7 +6,7 @@ const Post = ({ title, summary, content, cover, createdAt, author }) => {
             <div className="post">
                 <div className="image">
 
-                    <img src="https://images.pexels.com/photos/16500373/pexels-photo-16500373/free-photo-of-wood-stairs-dirty-steps.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" />
+                    <img src={'http://localhost:4000/' + cover} alt="" />
                 </div>
                 <div className="texts">
                     <h2>{title}</h2>
