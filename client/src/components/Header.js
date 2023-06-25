@@ -18,6 +18,7 @@ const Header = () => {
         callProfile()
     }, [])
 
+
     const logout = function () {
         fetch("http://localhost:4000/logout", {
             credentials: 'include',
