@@ -77,7 +77,10 @@ app.get("/profile", async (req, res) => {
             res.json(info)
         })
     }
-    res.json("");
+    else {
+        res.status(200)
+    }
+
 })
 
 //logout
