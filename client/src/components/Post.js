@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { formatISO9075 } from 'date-fns'
 import { Link } from 'react-router-dom'
+
 const Post = ({ _id, title, summary, content, cover, createdAt, author }) => {
+
     return (
         <div>
             <div className="post">
