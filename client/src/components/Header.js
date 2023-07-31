@@ -9,7 +9,7 @@ const Header = () => {
     useEffect(() => {
         async function callProfile() {
 
-            const response = await fetch("http://localhost:4000/profile", {
+            const response = await fetch("http://localhost:4000/api/profile", {
                 credentials: 'include'
             })
 
@@ -20,7 +20,7 @@ const Header = () => {
 
 
     const logout = function () {
-        fetch("http://localhost:4000/logout", {
+        fetch("http://localhost:4000/api/auth/logout", {
             credentials: 'include',
             method: 'POST'
         })

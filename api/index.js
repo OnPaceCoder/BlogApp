@@ -9,12 +9,18 @@ const uploadMiddleware = multer({ dest: 'uploads/' })
 const cookieParser = require("cookie-parser")
 const fs = require('fs')
 require('dotenv').config()
+const { db } = require("./config/db")
+
+//Routes and Controller
+const authRoute = require("./routes/auth.routes.js")
+const userRoute = require("./routes/user.routes.js")
 
 //Importing Database models
 const User = require("./models/User")
 const Post = require("./models/Post")
+
 //Creating Salt
-const salt = bcrypt.genSaltSync(15);
+
 const secret = process.env.SECRET
 //Middleware 
 const app = express()
@@ -22,72 +28,13 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads', express.static(__dirname + '/uploads'))
-
-
+app.use('/api/auth', authRoute)
+app.use('/api/profile', userRoute)
+// app.use('/api/post' , postRoute);
 //Database Connection
-mongoose.connect(`mongodb+srv://priyanksoftcolon:${process.env.PASSWORD}@cluster0.17c4qiy.mongodb.net/`)
+db();
 
 
-//Routes and Controller
-
-//register
-app.post("/register", async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        const userDoc = await User.create({
-            username, password: bcrypt.hashSync(password, salt)
-        });
-        res.json(userDoc)
-    } catch (error) {
-        res.status(400).json(error)
-    }
-
-})
-
-//login
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const userDoc = await User.findOne({ username });
-        const passwordCheck = bcrypt.compareSync(password, userDoc.password)
-        if (passwordCheck) {
-            jwt.sign({ username, id: userDoc.id }, secret, {}, (err, token) => {
-                if (err) throw err
-
-                res.cookie('token', token).json({ id: userDoc._id, username })
-            })
-        }
-        else {
-            res.status(400).json("Credentials Incorrect")
-        }
-    }
-    catch (error) {
-        console.log(error)
-        res.status(400).json(error)
-    }
-})
-
-//profile
-app.get("/profile", async (req, res) => {
-    const { token } = req.cookies;
-    if (token) {
-        jwt.verify(token, secret, {}, (err, info) => {
-            if (err) throw err
-            res.json(info)
-        })
-    }
-    else {
-        res.status(200)
-    }
-
-})
-
-//logout
-app.post("/logout", (req, res) => {
-
-    res.cookie('token', "").json("Ok")
-})
 
 //post
 
