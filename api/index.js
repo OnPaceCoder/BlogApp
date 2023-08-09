@@ -27,4 +27,6 @@ app.use('/post', postRoute);
 
 
 //Server listening on port:4000
-app.listen(4000)
+app.listen(4000, () => {
+    console.log("Server stared on port 4000")
+})

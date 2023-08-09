@@ -16,9 +16,9 @@ export const IndexPage = () => {
 
 
     return (
-        <div>
+        <div className='px-5 '>
             {
-                posts.length > 0 && posts.map(post =>
+                posts?.length > 0 && posts?.map(post =>
                     <Post  {...post} key={post._id} />)
             }
 

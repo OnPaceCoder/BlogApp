@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
 
@@ -13,7 +13,7 @@ const Header = () => {
                 credentials: 'include'
             })
 
-            response.json().then((data) => { setUserInfo(data); })
+            response?.json().then((data) => { setUserInfo(data); })
         }
         callProfile()
     }, [])
@@ -29,17 +29,17 @@ const Header = () => {
     const userName = userInfo?.username;
 
     return (
-        <div>
-            <header>
-                <Link to={"/"} className='logo'>MYBlog</Link>
+        <div className='w-full'>
+            <header className='max-w-[800px] px-5 bg-slate-100 py-4 mt-0'>
+                <Link to={"/"} className='logo'>Priyank Blogs</Link>
                 <nav>
-                    {userName && (<> <Link to="/create">Create new blog</Link>
-                        <Link to={"/"} onClick={logout}>Logout</Link>
+                    {userName && (<> <Link to="/create" ><button className='bg-slate-400 px-2 py-2 hover:bg-slate-200 duration-150 ease-in-out'>Create new blog</button></Link>
+                        <Link to={"/"} onClick={logout}><button className='bg-slate-400 px-2 py-2 w-24  hover:bg-slate-200 duration-150 ease-in-out'>Logout</button></Link>
                     </>)}
                     {!userName && (<>
-                        <Link to="/login">Login
+                        <Link to="/login"><button className='bg-slate-400 px-2 py-2 w-24  hover:bg-slate-200 duration-150 ease-in-out'>Login</button>
                         </Link>
-                        <Link to="/register">Register</Link>
+                        <Link to="/register"><button className='bg-slate-400 px-2 py-2 w-24  hover:bg-slate-200 duration-150 ease-in-out'>Register</button></Link>
                     </>)}
                 </nav>
             </header></div>

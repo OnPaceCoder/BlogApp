@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
+
 const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -24,6 +25,7 @@ const LoginPage = () => {
             }
             else {
                 response.json().then(userInfo => {
+
                     setUserInfo(userInfo)
                     setRedirect(true)
                 })
@@ -39,12 +41,14 @@ const LoginPage = () => {
     }
 
     return (
-        <div>
+        <div className='w-1/2 mx-auto'>
             <form className='login' onSubmit={login}>
-                <h1>Login</h1>
-                <input type="text" placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type='submit'>Login</button>
+                <h1 className='text-xl py-5 font-bold'>Login</h1>
+                <div className='flex flex-col gap-2'>
+                    <input className='p-1' type="text" placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input className='p-1' type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <button type='submit' className='bg-slate-500 my-5 text-white py-2 hover:bg-slate-300 duration-150 ease-in-out '>Login</button>
             </form>
         </div>
     )
