@@ -11,7 +11,7 @@ const register = async (req, res) => {
             username,
             password: bcrypt.hashSync(password, salt),
         });
-        res.json(userDoc);
+        res.json({ userName: userDoc.username });
     } catch (error) {
         res.status(400).json(error);
     }
@@ -22,7 +22,7 @@ const login = async (req, res) => {
 
     try {
         const userDoc = await User.findOne({ username });
-        const passwordCheck = bcrypt.compareSync(password, userDoc.password);
+        const passwordCheck = bcrypt.compareSync(password, userDoc?.password);
         if (passwordCheck) {
             jwt.sign({ username, id: userDoc.id }, secret, {}, (err, token) => {
                 if (err) throw err;

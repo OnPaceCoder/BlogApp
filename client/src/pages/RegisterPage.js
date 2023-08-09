@@ -5,6 +5,7 @@ import { Navigate, redirect } from 'react-router-dom';
 const RegisterPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [redirect, setRedirect] = useState(false)
 
     async function register(ev) {
         ev.preventDefault();
@@ -20,12 +21,14 @@ const RegisterPage = () => {
         }
         else {
             alert("Registration successfull!")
+            setRedirect(true)
 
-            return < Navigate to={'/'} />
         }
 
     }
-
+    if (redirect) {
+        return < Navigate to={'/'} />
+    }
 
     return (
         <div className='w-1/2 mx-auto'>
